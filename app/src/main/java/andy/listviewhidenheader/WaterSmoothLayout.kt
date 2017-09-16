@@ -30,7 +30,7 @@ class WaterSmoothLayout :LinearLayout, NestedScrollingParent{
         super.onNestedPreScroll(target, dx, dy, consumed)
         val header: WaterSmoothHeaderView = getChildAt(0) as WaterSmoothHeaderView;
         val recycler: RecyclerView = getChildAt(1) as RecyclerView;
-        if(recyclerView_Scrolly - header_Scrolly < 0) {
+        if(recyclerView_Scrolly - header_Scrolly  <= 0) {
             if (dy > 0) {
                 //往上滑 +
                 if (header_Scrolly < header.height) {
