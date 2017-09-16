@@ -3,5 +3,6 @@
     <declare-styleable name="WaterSmoothHeaderView">
         <attr name="waterSmoothLength" format="dimension"/>
         <attr name="waterSmoothBackground" format="color"/>
+        <attr name="waterSmoothHeaderHeight" format="dimension"/>
     </declare-styleable>
 </resources>

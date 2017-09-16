@@ -6,36 +6,28 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import android.widget.FrameLayout
-import android.graphics.RectF
 import android.graphics.PointF
-import android.R.attr.y
-import android.R.attr.x
+import android.support.v4.view.NestedScrollingChild
+import android.util.Log
 import android.view.MotionEvent
-import android.R.attr.centerY
-import android.R.attr.centerX
-
-
-
-
-
+import android.view.View
+import android.support.v4.view.NestedScrollingChildHelper
+import android.widget.ListView
 
 
 /**
  * Created by andyli on 2017/9/15.
  */
 class WaterSmoothHeaderView : FrameLayout {
-
-    private var mPaint: Paint = Paint()
-    private var mPath: Path = Path()
-    private var centerX: Int = 0
-    var centerY: Int = 0
-    private var start: PointF = PointF()
+    var mPaint: Paint = Paint()
+    var mPath: Path = Path()
+    var centerX =0f
+    var centerY = 0f
+    var start: PointF = PointF()
     var end: PointF =  PointF()
     var control: PointF =  PointF(-1f,-1f)
-    var smoothLength = 0;
+    var smoothLength = 0f
     var smoothBgColor = Color.RED;
 
 
@@ -49,34 +41,36 @@ class WaterSmoothHeaderView : FrameLayout {
         init(context, attrs)
     }
 
+
     private fun init(context: Context?, attrs: AttributeSet?) {
         setBackgroundColor(Color.TRANSPARENT)
         val a = context?.obtainStyledAttributes(attrs, R.styleable.WaterSmoothHeaderView, 0, 0);
         a?.let {
             smoothBgColor = it.getColor(R.styleable.WaterSmoothHeaderView_waterSmoothBackground, Color.RED)
-            smoothLength = it.getDimensionPixelSize(R.styleable.WaterSmoothHeaderView_waterSmoothLength, 0)
+            smoothLength = it.getDimension(R.styleable.WaterSmoothHeaderView_waterSmoothLength, 0f)
         }
         a?.recycle();
+        mPaint.isAntiAlias = true
     }
+
 
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        start.x = (0).toFloat()
-        start.y = (h - smoothLength).toFloat();
-        end.x = (w).toFloat()
-        end.y = (h - smoothLength).toFloat();
-        centerX = ((start.x + end.x)/2).toInt();
-        centerY = h - smoothLength
-        control.x = centerX.toFloat()
-        if(bottom - top > smoothLength){
-            control.y = (centerY + smoothLength).toFloat()
-        } else {
-            control.y = (centerY + bottom - top).toFloat()
-        }
+        update(this.smoothLength)
+
     }
 
-
+    fun update(smoothLength:Float){
+        start.x = (0).toFloat()
+        start.y = (height - smoothLength);
+        end.x = (width).toFloat()
+        end.y = (height - smoothLength);
+        centerX = (start.x + end.x)/2;
+        centerY = height - smoothLength
+        control.x = centerX.toFloat()
+        control.y = (centerY + smoothLength)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -91,5 +85,14 @@ class WaterSmoothHeaderView : FrameLayout {
         mPath.lineTo(0f, start.y)
         canvas.drawPath(mPath, mPaint)
     }
+
+    open fun smooth(scrollY:Int, dy:Int) :Boolean{
+        Log.d("test", "scrollY" + scrollY)
+       val tmpSmooth:Float = (smoothLength *((height - scrollY).toFloat()/(height).toFloat()))
+       update(tmpSmooth)
+       invalidate()
+        return false
+    }
+
 
 }
