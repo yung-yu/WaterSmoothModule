@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val recyclerView:RecyclerView = findViewById(R.id.recyclerView) as RecyclerView;
+        ViewCompat.setNestedScrollingEnabled(recyclerView, true)
         val data = ArrayList<String>();
         for ( i in 1..100){
             data.add("item"+i)

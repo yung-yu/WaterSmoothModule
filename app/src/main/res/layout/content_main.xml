@@ -11,12 +11,13 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
-      android:background="#05ffa3">
+      >
 
     <andy.listviewhidenheader.WaterSmoothHeaderView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:waterSmoothLength="60dp"
+
         >
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffed2b"
           />
 
   </andy.listviewhidenheader.WaterSmoothLayout>

@@ -63,20 +63,20 @@ class WaterSmoothHeaderView : FrameLayout {
 
     fun update(smoothLength:Float){
         start.x = (0).toFloat()
-        start.y = (height - smoothLength);
+        start.y = (height - smoothLength)
         end.x = (width).toFloat()
-        end.y = (height - smoothLength);
-        centerX = (start.x + end.x)/2;
+        end.y = (height - smoothLength)
+        centerX = (start.x + end.x)/2f
         centerY = height - smoothLength
-        control.x = centerX.toFloat()
-        control.y = (centerY + smoothLength)
+        control.x = centerX
+        control.y = (height + smoothLength)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         mPaint.setColor(smoothBgColor)
         mPaint.style = Paint.Style.FILL
-        mPaint.strokeWidth = 8f
+        mPaint.strokeWidth = 2f
         mPath.reset()
         mPath.moveTo(start.x, start.y)
         mPath.quadTo(control.x, control.y, end.x, end.y)
@@ -88,9 +88,13 @@ class WaterSmoothHeaderView : FrameLayout {
 
     open fun smooth(scrollY:Int, dy:Int) :Boolean{
         Log.d("test", "scrollY" + scrollY)
-       val tmpSmooth:Float = (smoothLength *((height - scrollY).toFloat()/(height).toFloat()))
-       update(tmpSmooth)
-       invalidate()
+        val scale = scrollY/(height - smoothLength);
+        if(scale <= 1) {
+            val tmpSmooth: Float = (smoothLength * (1f - scale))
+            update(tmpSmooth)
+            invalidate()
+            return true
+        }
         return false
     }
 
