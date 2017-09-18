@@ -21,7 +21,8 @@ class WaterSmoothLayout :LinearLayout, NestedScrollingParent{
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onStartNestedScroll(child: View?, target: View?, nestedScrollAxes: Int): Boolean {
-        return target is RecyclerView
+
+        return target is RecyclerView ;
     }
 
     override fun onStopNestedScroll(child: View?) {

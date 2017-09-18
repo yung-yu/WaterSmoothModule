@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val recyclerView:RecyclerView = findViewById(R.id.recyclerView) as RecyclerView;
         ViewCompat.setNestedScrollingEnabled(recyclerView, true)
         val data = ArrayList<String>();
-        for ( i in 1..100){
+        for ( i in 1..7){
             data.add("item"+i)
         }
         recyclerView.layoutManager = LinearLayoutManager(this);
